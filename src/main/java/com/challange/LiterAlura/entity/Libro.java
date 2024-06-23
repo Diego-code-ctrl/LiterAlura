@@ -1,47 +1,38 @@
 package com.challange.LiterAlura.entity;
 
-import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.List;
 
-/**
- *
- * @author diegobecerril
- */
 @Entity
 @Table(name = "Libros")
-public class Libro {
-
+public class Libro{
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String title;
-
-    @ManyToMany
-    @JoinTable(
-            name = "libro_autor",
-            joinColumns = @JoinColumn(name = "libro_id"),
-            inverseJoinColumns = @JoinColumn(name = "autor_id")
-    )
-    private List<Autor> authors;
-
-    @ElementCollection
-    private List<String> languages;
-
+    
+    @Column(unique = true)
+    private String titulo;
+    
+    @OneToMany(mappedBy = "libro")
+    private List<Autor> autores;
+    
+    @OneToMany(mappedBy = "libro")
+    private List<Lenguaje> lenguaje;
+    
     private Long downloadCount;
 
-    public Libro(String title, List<Autor> authors, List<String> languages, Long downloadCount) {
-        this.title = title;
-        this.authors = authors;
-        this.languages = languages;
+    public Libro() {
+    }
+
+    public Libro(String titulo, Long downloadCount) {
+        this.titulo = titulo;
         this.downloadCount = downloadCount;
     }
 
@@ -53,28 +44,28 @@ public class Libro {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getTitulo() {
+        return titulo;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
-    public List<Autor> getAuthors() {
-        return authors;
+    public List<Autor> getAutores() {
+        return autores;
     }
 
-    public void setAuthors(List<Autor> authors) {
-        this.authors = authors;
+    public void setAutores(List<Autor> autores) {
+        this.autores = autores;
     }
 
-    public List<String> getLanguages() {
-        return languages;
+    public List<Lenguaje> getLenguaje() {
+        return lenguaje;
     }
 
-    public void setLanguages(List<String> languages) {
-        this.languages = languages;
+    public void setLenguaje(List<Lenguaje> lenguaje) {
+        this.lenguaje = lenguaje;
     }
 
     public Long getDownloadCount() {
@@ -84,9 +75,6 @@ public class Libro {
     public void setDownloadCount(Long downloadCount) {
         this.downloadCount = downloadCount;
     }
-
-    @Override
-    public String toString() {
-        return "Libro{" + "id=" + id + ", title=" + title + ", authors=" + authors + ", languages=" + languages + ", downloadCount=" + downloadCount + '}';
-    }
+    
+    
 }

@@ -1,42 +1,37 @@
 package com.challange.LiterAlura.entity;
 
-import com.challange.LiterAlura.model.DatosAutor;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-
-/**
- *
- * @author diegobecerril
- */
 
 @Entity
 @Table(name = "Autores")
-public class Autor {
+public class Autor{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
     @Column(unique = true)
-    private String name;
+    private String nombre;
+    
+    @ManyToOne
+    private Libro libro;
     
     private Integer birthYear;
     private Integer deathYear;
 
-    public Autor(String name, Integer birthYear, Integer deathYear) {
-        this.name = name;
-        this.birthYear = birthYear;
-        this.deathYear = deathYear;
+    public Autor() {
     }
 
-    public Autor(DatosAutor author) {
-        this.name = author.name();
-        this.birthYear = author.birthYear();
-        this.deathYear = author.deathYear();
+    public Autor(String nombre, Integer birthYear, Integer deathYear) {
+        this.nombre = nombre;
+        this.birthYear = birthYear;
+        this.deathYear = deathYear;
     }
 
     public Long getId() {
@@ -47,12 +42,12 @@ public class Autor {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public Integer getBirthYear() {
@@ -69,6 +64,14 @@ public class Autor {
 
     public void setDeathYear(Integer deathYear) {
         this.deathYear = deathYear;
+    }
+
+    public Libro getLibro() {
+        return libro;
+    }
+
+    public void setLibro(Libro libro) {
+        this.libro = libro;
     }
     
 }
